@@ -1,29 +1,18 @@
-/* 
-    1. Express 모듈 설치 방법
-    Express란 Node.js 모듈 중 하나이며, Node.js상에서 동작하는 웹 개발 프레임워크다.
-    $npm install express --save (save 옵션을 통해 package.json 파일에서 설치한 모듈을 편하게 관리할 수 있음)
-
-    2. $node app.js => 서버 가동 
-       $ctrl + c    => 서버 종료
-*/
-
-// Express 앱 생성
-const express = require("express");
-const app = express();
-
-/* 
-    app.get(주소, 콜백함수)는 특정 주소에 대한 GET 요청이 들어올 때 콜백 함수를 실행하는 메서드다.
-    콜백 함수는 req(요청 객체)와 res(응답 객체)를 매개변수로 받아 요청을 처리하고, 응답을 보낸다.
-*/
-app.get("/",(req, res) =>{
-    res.send("루트 화면");
+// 내장 모듈 (npm으로 따로 다운로드할 필요 X)
+const http = require("http");
+const app = http.createServer((req, res)=>{
+    console.log(req.url);  // client가 요청하는 url 확인 가능
+    res.writeHead(200, {"Content-Type": "text/html; charset=utf-8"});  // 한글 깨짐 해결 방법
+    // Express와 달리 if문을 이용해 url에 따른 응답을 설정해야함 ( 코드 가독성 떨어짐 )
+    if(req.url === "/"){
+        res.end("/ 페이지");  // 한글 깨짐 현상 발생
+    }
+    else if(req.url === "/login"){
+        res.end("/login page");
+    }
 });
 
-app.get("/login", (req,res)=>{
-    res.send("로그인 화면");
-});
 
-// 3000번 포트에서 HTTP 서버 실행
-app.listen(3000, ()=>{
-    console.log("서버 가동");
-});
+app.listen(3001, ()=>{
+    console.log("http 서버 가동");
+})
