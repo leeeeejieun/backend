@@ -5,6 +5,7 @@ const express = require("express");
 const app = express();
 
 const PORT = 3000;
+
 // 라우팅 
 const home = require("./routes/home");   // 해당 디렉터리의 위치한 js 파일을 읽어옴
 
