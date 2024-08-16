@@ -1,23 +1,19 @@
-기본 폴더 구조 (참고용)
+public 폴더는 정적 파일(이미지, CSS, js 등)을 저장하는 곳이다.
+public 폴더 내의 js 폴더는 주로 클라이언트 측에서 사용되는 js 파일들을 저장하기 위해 사용된다.
 
-app/
-├── bin/
-│   └── www.js           # 서버 시작 스크립트
-├── config/
-│   └── config.js        # 설정 파일들
-├── public/
-│   ├── images/          # 이미지 파일
-│   ├── javascripts/     # 클라이언트 측 JavaScript 파일
-│   └── stylesheets/     # CSS 파일
-├── src/
-│   ├── controllers/     # 컨트롤러 파일들
-│   ├── models/          # 데이터 모델 (예: Mongoose 스키마)
-│   ├── routes/          # 라우트 정의 파일
-│   ├── services/        # 비즈니스 로직 파일
-│   └── app.js           # Express 애플리케이션 설정
-├── test/
-│   └── test.js          # 테스트 코드
-├── .gitignore           # Git에서 제외할 파일들
-├── package.json         # 프로젝트 설정 및 의존성 정보
-├── package-lock.json    # 설치된 정확한 버전의 의존성 기록
-└── README.md            # 프로젝트 설명 파일
+'public/js' 폴더의 용도
+1. 클라이언트 측 스크립트
+- 웹 페이지에서 실행되는 js 파일들을 저장
+- 이벤트 핸들러, DOM 조작, 애니메이션, 폼 처리 등 클라이언트 측의 동작을 담당하는 스크립트들이 포함된다.
+
+2. 라이브러리 및 플러그인
+- 외부 js 라이브러리나 플러그인 파일들을 저장 (ex: jQuery)
+
+사용 예시
+1. HTML 파일에서의 참조
+<script src="/js/home/login.js"></script>
+- HTML 파일에서 <script> 태그를 사용하여 'public/js/home/login.js' 파일을 참조
+
+2.Express 설정
+app.use(express.static(`${__dirname}/src/public`)); 
+- 정적 파일 제공 경로를 설정하면, 클라이언트에서 해당 경로로 직접 접근할 수 있다.
