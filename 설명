@@ -1,1 +1,23 @@
-.gitignore : 깃허브에 업로드 하면 안되는 파일&폴더 명시
+기본 폴더 구조 (참고용)
+
+app/
+├── bin/
+│   └── www.js           # 서버 시작 스크립트
+├── config/
+│   └── config.js        # 설정 파일들
+├── public/
+│   ├── images/          # 이미지 파일
+│   ├── javascripts/     # 클라이언트 측 JavaScript 파일
+│   └── stylesheets/     # CSS 파일
+├── src/
+│   ├── controllers/     # 컨트롤러 파일들
+│   ├── models/          # 데이터 모델 (예: Mongoose 스키마)
+│   ├── routes/          # 라우트 정의 파일
+│   ├── services/        # 비즈니스 로직 파일
+│   └── app.js           # Express 애플리케이션 설정
+├── test/
+│   └── test.js          # 테스트 코드
+├── .gitignore           # Git에서 제외할 파일들
+├── package.json         # 프로젝트 설정 및 의존성 정보
+├── package-lock.json    # 설치된 정확한 버전의 의존성 기록
+└── README.md            # 프로젝트 설명 파일
