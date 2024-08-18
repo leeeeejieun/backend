@@ -16,7 +16,11 @@ app.set("views", "./src/views");
     ! npm install ejs -S (모듈 설치 필요)
 */
 app.set("view engine", "ejs");
-  
+
+app.use(express.json());                             // JSON 형식의 요청 본문을 파싱
+// URL을 통해 전달되는 데이터에 한글, 공백 등과 같은 문자가 필요한 경우 제대로 인식되지 않는 문제 해결
+app.use(express.urlencoded({ extended: false }));    // URL-encoded 형식의 요청 본문을 파싱  
+
 app.use(express.static(`${__dirname}/src/public`));  // 정적 파일 제공 경로 설정
 app.use("/", home);                                  // use -> 미들 웨어를 등록해주는 메서드
 app.use((req, res, next)=>{                          // 정의된 라우트가 없으면 404 처리
