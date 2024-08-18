@@ -6,14 +6,21 @@
     ! route에서 직접 작성하던 콜백 함수를 컨트롤러로 분리하여 모듈화 할 시,
       코드의 재사용성 & 유지보수성이 향상되는 장점이 있다.
 */
-const hello = (req, res) => {
-    res.render("home/index"); // ../views/home/index.ejs 파일 렌더링
-}
 
-const login = (req, res) => {
-    res.render("home/login");
-}
+const output = {
+    home : (req, res) => {
+        res.render("home/index"); // ../views/home/index.ejs 파일 렌더링
+    },
+    login : (req, res) => {
+        res.render("home/login");
+    },
+};
 
+const process ={
+    login : (req, res) =>{
+        console.log(req.body);
+    }
+}
 /* 
     Object 형식으로 모듈을 export 
     Object는 {key : value}로 이루어져있다.
@@ -24,6 +31,6 @@ const login = (req, res) => {
     }
 */
 module.exports = {
-    hello,
-    login,
+    output,
+    process,
 };

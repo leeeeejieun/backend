@@ -7,8 +7,9 @@ const router = express.Router();   // 라우터 객체 생성
 const ctrl = require("./home.ctrl"); 
 
 // "/" 경로로 GET 요청이 들어오면 index.ejs 템플릿을 렌더링
-router.get("/", ctrl.hello);
 
-router.get("/login", ctrl.login);
+router.get("/", ctrl.output.home);
+router.get("/login", ctrl.output.login);
+router.post("/login", ctrl.process.login);
 
 module.exports = router;

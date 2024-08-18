@@ -16,7 +16,7 @@ app.set("views", "./src/views");
     ! npm install ejs -S (모듈 설치 필요)
 */
 app.set("view engine", "ejs");
-
+  
 app.use(express.static(`${__dirname}/src/public`));  // 정적 파일 제공 경로 설정
 app.use("/", home);                                  // use -> 미들 웨어를 등록해주는 메서드
 app.use((req, res, next)=>{                          // 정의된 라우트가 없으면 404 처리
