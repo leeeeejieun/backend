@@ -1,7 +1,5 @@
 "use strict";
 
-const { use } = require(".");
-
 /* 
     Controller : MVC(Model-View-Controller) 패턴의 구성 요소 중 하나로,
     사용자로부터 받은 요청을 처리한 후, 그에 대한 응답을 반환하는 역할을 한다.
@@ -42,7 +40,7 @@ const process ={
         // 로그인이 실패한 경우
         return res.json({                   
             success : false,
-            msg : "로그인에 실패하셨습습니다.",
+            msg : "로그인에 실패하셨습니다.",
         });
     },
 };
