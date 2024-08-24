@@ -10,11 +10,7 @@ class UserStorage {
 
     // 사용자 정보 반환 메서드
     static getUsers(...fields) {   // 가변 매개변수
-
-    /* newUsers는 처음에 초기값으로 설정된 빈 객체 {}를 가지며,
-       각 순회마다 누적된 결과가 newUsers에 저장된다.
-       field는 fields 배열의 현재 요소를 나타낸다.
-    */
+        
     const newUsers = fields.reduce((newUsers, field) =>{
         const users = this.#users;
         // 'hasOwnProperty' 메서드는 객체가 특정 키(속성)를 가지고 있는지 확인
@@ -36,6 +32,15 @@ class UserStorage {
             return newUser;
         },{});
         return userInfo
+    }
+
+    // 새로운 사용자 정보 추가 (서버 재가동시 초기화됨)
+    static save(userInfo) {
+        const users = this.#users;
+        users.id.push(userInfo.id);
+        users.password.push(userInfo.password);
+        users.name.push(userInfo.name);
+        return {success: true};
     }
 }
 
