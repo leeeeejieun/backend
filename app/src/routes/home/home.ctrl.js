@@ -23,9 +23,10 @@ const output = {
 
 // 로그인 인증 기능 구현
 const process ={
-    login : (req, res) =>{
+    login : async (req, res) =>{
     const user = new User(req.body); 
-    const response = user.login();
+    // login 함수가 반환값을 주기 전에 response에 undefined를 응답해주므로 async/await 적용
+    const response = await user.login();  
     return res.json(response);
     },
     register : (req, res) =>{

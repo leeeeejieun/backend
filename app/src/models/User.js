@@ -8,9 +8,10 @@ class User  {
         this.body = body;
     }
 
-    login() {
+    async login() {
         const client = this.body;
-        const {id , password} = UserStorage.getUserInfo(client.id);
+        // getUserInfo의 작업이 끝날 때까지 기다림 (다른 작업을 실행X)
+        const { id, password } = await UserStorage.getUserInfo(client.id);
 
         // id가 존재하는 경우
         if(id) {
