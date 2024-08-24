@@ -9,7 +9,20 @@ const fs = require("fs").promises;
 
 // 사용자 정보 저장
 class UserStorage {
-    // private은 클래스 최상단에 위치
+    static #getUsers(data, isAll, fields) {
+        const users = JSON.parse(data);
+        if(isAll) return users;   // 모든 사용자 정보 반환
+
+        const newUsers = fields.reduce((newUsers, field) =>{
+            // 'hasOwnProperty' 메서드는 객체가 특정 키(속성)를 가지고 있는지 확인
+            if(users.hasOwnProperty(field)){
+                newUsers[field] = users[field];  
+            }
+            return newUsers;
+        },{});
+            return newUsers;   
+    }
+
     static #getUserInfo(data, id) {
         // Buffer 객체를 문자열로 반환(json 파일을 읽어오기 때문)
         const users = JSON.parse(data);
@@ -22,17 +35,12 @@ class UserStorage {
     }
 
     // 사용자 정보 반환 메서드
-    static getUsers(...fields) {   // 가변 매개변수
-        
-    const newUsers = fields.reduce((newUsers, field) =>{
-        // const users = this.#users;
-        // 'hasOwnProperty' 메서드는 객체가 특정 키(속성)를 가지고 있는지 확인
-        if(users.hasOwnProperty(field)){
-            newUsers[field] = users[field];  // newUsers에 filed 속성&값 추가
-        }
-        return newUsers;
-    },{}); // 초기값을 빈 객체로 설정
-        return newUsers;   
+    static getUsers(isAll, ...fields) { 
+        return fs.readFile("./src/databases/users.json")  
+        .then((data) => {
+             return this.#getUsers(data, isAll, fields);
+        })
+        .catch(console.err);   
     }
 
     // 특정 사용자 정보 반환
@@ -46,13 +54,18 @@ class UserStorage {
         .catch(console.err);   
     }
 
-    // 새로운 사용자 정보 추가 (서버 재가동시 초기화됨)
-    static save(userInfo) {
-        // const users = this.#users;
+    static async save(userInfo) {
+       const users = await this.getUsers(true);
+       // 입력한 id가 존재하지 않는 경우
+       if (users.id.includes(userInfo.id)){
+           throw "이미 존재하는 아이디입니다.";   // error를 객체가 아닌 문자열로 던짐
+        }
         users.id.push(userInfo.id);
         users.password.push(userInfo.password);
         users.name.push(userInfo.name);
-        return {success: true};
+       // 새로운 사용자 추가
+       fs.writeFile("./src/databases/users.json", JSON.stringify(users)); //Object를 JSON 형식의 문자열로 반환
+       return {success : true};
     }
 }
 

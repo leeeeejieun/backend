@@ -1,22 +1,4 @@
-! readFile 메서드
+! JSON Pretty Printer 
 
-<구조>
-fs.readFile( 파일명(파일경로), 옵션, 콜백함수 )
-- fs.readFile은 비동기적으로 파일을 읽어오는 함수로, 파일 읽기 작업이 완료된 후 콜백 함수를 호출한다.
-
-* 예시
-const fs = require('fs');
-
-// 파일을 utf8 인코딩으로 읽고, 읽기가 완료되면 콜백함수를 호출
-fs.readFile('input.txt', 'utf8', (err, data) => {
-  if (err) {
-    // 파일을 읽는 중에 오류가 발생하면 `err` 인자로 에러 객체가 전달된다.
-    console.error(err);
-    return;
-  }
-  // 파일 읽기에 성공하면 `data` 로 파일의 내용이 전달된다.
-  console.log(data);
-});
-
-+ pending : 비동기 작업이 진행 중이며, 결과를 아직 받을 수 없는 상태다.
-            즉, 데이터가 완전히 읽혀지지 않았거나 작업이 완료되지 않았다는 것을 의미한다.
+json 데이터 구조적으로 정리
+단축키  : ctrl + shift + j  (ctrl+p -> >json~ 에서 편집 가능)
