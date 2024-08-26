@@ -12,21 +12,17 @@ class User  {
         const client = this.body;
         // getUserInfo의 작업이 끝날 때까지 기다림 (다른 작업을 실행X)
         const userInfo = await UserStorage.getUserInfo(client.id);
-        if(!userInfo) throw new Error("사용자 정보가 없습니다.");
+        if(!userInfo) return {success : false, msg : "존재하지 않는 아이디입니다."};
 
         const {id, password} = userInfo;
 
-        // id가 존재하는 경우
-        if(id) {
-            // id & password가 모두 일치한 경우
-            if(id === client.id && password === client.password){
-                return {success : true};
-            }
-            // password가 틀린 경우
-            return {success : false, msg : "비밀번호가 틀렸습니다."};
+        // id & password가 모두 일치한 경우
+        if(id === client.id && password === client.password){
+            return {success : true};
         }
-        // id가 존재하지 않는 경우
-        return {success : false, msg : "존재하지 않는 아이디입니다."};
+        // password가 틀린 경우
+        return {success : false, msg : "비밀번호가 틀렸습니다."};
+
     }
 
     async register() {
