@@ -1,7 +1,7 @@
 "use strict"
 const app = require("../app");
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 /*
     서버를 가동하는 명령어가 해당 파일에 위치해 있으므로,

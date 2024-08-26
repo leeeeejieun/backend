@@ -2,6 +2,10 @@
 
 // 모듈
 const express = require("express");
+// 모든 OS에서 동일한 환경 변수 등록&가져오기 (사용 전 npm i -s dotenv 필요)
+const dotenv = require("dotenv");
+dotenv.config();
+
 const app = express();
 
 // 라우팅 
