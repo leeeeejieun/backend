@@ -1,11 +1,7 @@
 "use strict";
 
-/* 
-    users 테이블을 읽어오기 위해 파일 시스템을 사용한다.
-    fs.promises는 fs 모듈의 비동기 메서드들이 promise를 반환하도록 한다.
-    promise는 수행하는 동작이 끝남과 동시에 상태를 알려주므로 비동기 처리에 효과적이다.
-*/
-const fs = require("fs").promises;
+// DB 모듈 불러오기
+const db = require("../config/db");
 
 // 사용자 정보 저장
 class UserStorage {
@@ -34,38 +30,29 @@ class UserStorage {
         return userInfo;
     }
 
-    // 사용자 정보 반환 메서드
+    // 사용자 정보 반환
     static getUsers(isAll, ...fields) { 
-        return fs.readFile("./src/databases/users.json")  
-        .then((data) => {
-             return this.#getUsers(data, isAll, fields);
-        })
-        .catch(console.err);   
+          
     }
 
     // 특정 사용자 정보 반환
     static getUserInfo(id) {
-        return fs.readFile("./src/databases/users.json")  // promise 반환
-        // 파일 읽기가 성공한 경우
-        .then((data) => {
-             return this.#getUserInfo(data, id);
-        })
-        // 파일 읽기가 실패한 경우
-        .catch(console.err);   
+        // getUserInfo가 결과값을 반환할 수 있도록 promise 객체 생성
+        return new Promise((resolve, reject) =>{
+            db.query("SELECT * FROM users WHERE id = ?", [id] , (err, data) => {
+                if(err) {
+                    reject(err); // 쿼리 실행 중 에러가 발생하면 reject 실행
+                }
+    
+                // data가 배열로 반환되기 때문에 첫 번째 값을 반환하도록 지정
+                resolve(data[0]);  // 쿼리 성공 시 data 반환
+            });
+        });
     }
 
+    // DB에 새로운 사용자 등록
     static async save(userInfo) {
-       const users = await this.getUsers(true);
-       // 입력한 id가 존재하는 경우
-       if (users.id.includes(userInfo.id)){
-           throw "이미 존재하는 아이디입니다.";   // error를 객체가 아닌 문자열로 던짐
-        }
-        users.id.push(userInfo.id);
-        users.password.push(userInfo.password);
-        users.name.push(userInfo.name);
-       // 새로운 사용자 추가
-       fs.writeFile("./src/databases/users.json", JSON.stringify(users)); //Object를 JSON 형식의 문자열로 반환
-       return {success : true};
+    
     }
 }
 
