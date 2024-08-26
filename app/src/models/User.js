@@ -26,10 +26,15 @@ class User  {
         return {success : false, msg : "존재하지 않는 아이디입니다."};
     }
 
-    register() {
+    async register() {
         const client = this.body;
-        const response = UserStorage.save(client);   // 입력 받은 정보를 useStorage에 저장
-        return response;
+        // 기존에 있는 id로 회원 가입 시 발생하는 에러를 해당 메서드에서 처리  
+        try {
+            const response = await UserStorage.save(client); 
+            return response;
+        }catch(err){
+            return { success : false, msg : err };  
+        }
     }
 }
 
