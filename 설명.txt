@@ -1,24 +1,23 @@
-! dotenv
--  Node.js 애플리케이션에서 환경 변수를 관리하기 위한 모듈이다.
-이를 사용하면 .env 파일에 정의된 환경 변수를 로드하여 애플리케이션에서 사용할 수 있다.
+! morgan을 이용하여 로그 관리하기
+- morgan은 HTTP request logger middleware로 HTTP 요청과 응답에 대한 log을 남겨주는 미들웨어다.
 
-<사용 방법>
-1. 패키지 설치
-- npm  i -s dotenv
+1. 사용 전 설치
+- npm i morgan -S
 
-2. .env 파일 생성
-- 프로젝트의 루트 디렉토리에 .env 파일을 생성하고 환경 변수를 'KEY=VALUE' 형식으로 정의한다.
-(ex PORT=3000)
+2. 사용 방법
+- const morgan = require("morgan); 
+  app.use(morgan("dev"));  미들웨어 등록
 
-3. 애플리케이션에서 dotenv 로드
-- 애플리케이션의 진입접 파일(일반적으로 index.js or app.js)에서 dotenv를 로드해야 한다.
-(ex require('dotenv').config(); )
+3. 로그의 출력 포맷 지정"
+- app.use(morgan(":method :url :status :response-time ms - :res[content-length]"));
 
-4. 환경 변수 사용
--process.env 객체를 통해 변수 접근이 가능하다.
-(ex const PORT = process.env.PORT; )
+4. 로그 파일 출력
+- 로그 내용을 콘솔에 출력하지 않고 파일에 저장
 
-=> .env 파일을 통해 중요한 설정 정보를 외부에 노출하지 않고, 애플리케이션을 보다 안전하게 관리할 수 있다.
+const fs = require("fs");
 
-! 출처
- https://velog.io/@sh_j225/dotenv-%EC%82%AC%EC%9A%A9%EB%B2%95
+const accessLogStream = fs.createWriteStream(
+    `${__dirname}/log/access.log`,   
+    { flags: 'a' }
+);
+
